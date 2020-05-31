@@ -51,10 +51,10 @@ const (
 )
 
 func init() {
-	plugins.RegisterGenericCommentHandler(pluginName, handleGenericComment, helpProvider)
+	plugins.RegisterGenericCommentHandler(pluginName, HandleGenericComment, HelpProvider)
 }
 
-func helpProvider(config *plugins.Configuration, _ []config.OrgRepo) (*pluginhelp.PluginHelp, error) {
+func HelpProvider(config *plugins.Configuration, _ []config.OrgRepo) (*pluginhelp.PluginHelp, error) {
 	// The Config field is omitted because this plugin is not configurable.
 	pluginHelp := &pluginhelp.PluginHelp{
 		Description: "The dog plugin adds a dog image to an issue or PR in response to the `/woof` command.",
@@ -131,7 +131,7 @@ func (u realPack) readDog(dogURL string) (string, error) {
 	return FormatURL(dogURL)
 }
 
-func handleGenericComment(pc plugins.Agent, e github.GenericCommentEvent) error {
+func HandleGenericComment(pc plugins.Agent, e github.GenericCommentEvent) error {
 	return handle(pc.GitHubClient, pc.Logger, &e, dogURL, defaultFineImagesRoot)
 }
 
